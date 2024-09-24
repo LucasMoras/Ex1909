@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Br.com.Dao.ConexaoDao;
+import javax.swing.ImageIcon;
 
 public class TelaLogin extends javax.swing.JFrame {
     
+        
         Connection conexao = null;
         PreparedStatement pst = null;
         ResultSet rs = null;
@@ -17,8 +19,12 @@ public class TelaLogin extends javax.swing.JFrame {
         conexao = ConexaoDao.Conector();
         if(conexao != null){
            lblStatus.setText("Conectado");
+           ImageIcon conectado = new ImageIcon("src/Icones/check_5610944.png");
+           lblStatus.setIcon(conectado);
         }else{
             lblStatus.setText("Desconectado");
+            ImageIcon desconectado = new ImageIcon("src/Icones/squere_14034319.png");
+            lblStatus.setIcon(desconectado);
         }
         System.out.println(conexao);
     }
@@ -100,11 +106,11 @@ public class TelaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     public static void main(String args[]) {
