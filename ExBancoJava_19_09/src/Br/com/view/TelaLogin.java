@@ -13,30 +13,25 @@ public class TelaLogin extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    public void logar() {
-        
+    public void logar() {     
         String sql = "select * from tb_usuarios where login = ? and senha = ? ";
-
         try {
             //preparar a consulta no banco, em funcao do que foi inserido
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtUsuario.getText());
             pst.setString(2, txtSenha.getText());
             //executar a query
-            rs = pst.executeQuery();
-            
+            rs = pst.executeQuery();            
             if (rs.next()) {
                 TelaPrincipal principal = new TelaPrincipal();
                 principal.setVisible(true);  
             }else{
                 JOptionPane.showMessageDialog(null, "Usuario e/ou senha invalidos");
-            }
-            
+            }           
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,"Tela de login" + e);
         }
     }
-
     public TelaLogin() {
 
         initComponents();
