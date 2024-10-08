@@ -1,7 +1,9 @@
 
 package Br.com.view;
 
+import Br.com.DTO.UsuarioDTO;
 import Br.com.Dao.ConexaoDao;
+import Br.com.Dao.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,32 +19,12 @@ public class TelaUsuarios extends javax.swing.JFrame {
         conexao = ConexaoDao.Conector();
     }
     public void Limpar(){
-        txtIDusu.setText(null);
-        txtNomeUsu.setText(null);
-        txtSenha.setText(null);
-        txtUsu.setText(null);
+        txtIdUsuario.setText(null);
+        txtNomeUsuario.setText(null);
+        txtSenhaUsuario.setText(null);
+        txtLoginUsuario.setText(null);
     }
-    //metodo pesquisar
-    public void Pesquisar(){
-       String sql = "select * from tb_usuarios where id_usuario = ? "; 
-       try{
-          pst = conexao.prepareStatement(sql);
-          pst.setString(1, txtIDusu.getText());
-          rs = pst.executeQuery();
-           if (rs.next()) {
-               txtNomeUsu.setText(rs.getString(2));
-               txtUsu.setText(rs.getString(3));
-               txtSenha.setText(rs.getString(4));
-           } else {
-               JOptionPane.showMessageDialog(null, "Usuário não cadastrado");
-               
-           }
-       }catch(Exception e){
-           JOptionPane.showMessageDialog(null, "Tela usuário" + e);
-           
-       }
-    }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -50,10 +32,10 @@ public class TelaUsuarios extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         bntPesquisar = new javax.swing.JButton();
-        txtIDusu = new javax.swing.JTextField();
-        txtNomeUsu = new javax.swing.JTextField();
-        txtUsu = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
+        txtIdUsuario = new javax.swing.JTextField();
+        txtNomeUsuario = new javax.swing.JTextField();
+        txtLoginUsuario = new javax.swing.JTextField();
+        txtSenhaUsuario = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -75,15 +57,15 @@ public class TelaUsuarios extends javax.swing.JFrame {
             }
         });
 
-        txtUsu.addActionListener(new java.awt.event.ActionListener() {
+        txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuActionPerformed(evt);
+                txtLoginUsuarioActionPerformed(evt);
             }
         });
 
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+        txtSenhaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
+                txtSenhaUsuarioActionPerformed(evt);
             }
         });
 
@@ -99,6 +81,11 @@ public class TelaUsuarios extends javax.swing.JFrame {
         });
 
         jButton2.setText("Adicionar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Excluir");
 
@@ -121,8 +108,8 @@ public class TelaUsuarios extends javax.swing.JFrame {
                                 .addComponent(jLabel4)
                                 .addGap(20, 20, 20)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                            .addComponent(txtUsu)))
+                            .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                            .addComponent(txtLoginUsuario)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bntPesquisar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -139,8 +126,8 @@ public class TelaUsuarios extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIDusu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
-                            .addComponent(txtNomeUsu, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(txtIdUsuario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,18 +137,18 @@ public class TelaUsuarios extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtIDusu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1))
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtNomeUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNomeUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addGap(15, 15, 15)
-                        .addComponent(txtUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -178,21 +165,38 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntPesquisarActionPerformed
-        //Chamada do Método pesquisar
-        Pesquisar();        
+               
     }//GEN-LAST:event_bntPesquisarActionPerformed
 
-    private void txtUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuActionPerformed
+    private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
  
-    }//GEN-LAST:event_txtUsuActionPerformed
+    }//GEN-LAST:event_txtLoginUsuarioActionPerformed
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+    private void txtSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaUsuarioActionPerformed
 
-    }//GEN-LAST:event_txtSenhaActionPerformed
+    }//GEN-LAST:event_txtSenhaUsuarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Limpar();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        int id_usuario = Integer.parseInt(txtIdUsuario.getText());
+        String nome_usuario = txtNomeUsuario.getText();
+        String login_usuario = txtLoginUsuario.getText();
+        String senha_usuario = txtSenhaUsuario.getText();
+        
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        
+        objUsuarioDTO.setId_usuario(id_usuario);
+        objUsuarioDTO.setNomeUsuario(nome_usuario);
+        objUsuarioDTO.setLoginUsuario(login_usuario);
+        objUsuarioDTO.setSenhaUsuario(senha_usuario);        
+        UsuarioDAO U1 = new UsuarioDAO();       
+        U1.inserirUsuario(objUsuarioDTO); 
+        Limpar();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
 
@@ -213,9 +217,9 @@ public class TelaUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtIDusu;
-    private javax.swing.JTextField txtNomeUsu;
-    private javax.swing.JTextField txtSenha;
-    private javax.swing.JTextField txtUsu;
+    private javax.swing.JTextField txtIdUsuario;
+    private javax.swing.JTextField txtLoginUsuario;
+    private javax.swing.JTextField txtNomeUsuario;
+    private javax.swing.JTextField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 }
