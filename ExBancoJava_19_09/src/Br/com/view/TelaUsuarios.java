@@ -1,4 +1,3 @@
-
 package Br.com.view;
 
 import Br.com.DTO.UsuarioDTO;
@@ -10,21 +9,23 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 public class TelaUsuarios extends javax.swing.JFrame {
+
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    
+
     public TelaUsuarios() {
         initComponents();
         conexao = ConexaoDao.Conector();
     }
-    public void Limpar(){
+
+    public void Limpar() {
         txtIdUsuario.setText(null);
         txtNomeUsuario.setText(null);
         txtSenhaUsuario.setText(null);
         txtLoginUsuario.setText(null);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -40,7 +41,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        BntExcluir = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,9 +88,19 @@ public class TelaUsuarios extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Excluir");
+        BntExcluir.setText("Excluir");
+        BntExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BntExcluirActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,7 +128,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(BntExcluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -155,7 +166,7 @@ public class TelaUsuarios extends javax.swing.JFrame {
                     .addComponent(bntPesquisar)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
+                    .addComponent(BntExcluir)
                     .addComponent(jButton4))
                 .addContainerGap())
         );
@@ -165,11 +176,22 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntPesquisarActionPerformed
-               
+        
+        //Captura de informações da tela
+        int id_usuario = Integer.parseInt(txtIdUsuario.getText());
+        
+        //Transferencia para classe DTO
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        objUsuarioDTO.setId_usuario(id_usuario);
+        
+        //Cria objeto e chama metodo pesquisar de DAO
+        UsuarioDAO U1 = new UsuarioDAO();
+        U1.PesquisarUsuario(objUsuarioDTO);
+        
     }//GEN-LAST:event_bntPesquisarActionPerformed
 
     private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
- 
+
     }//GEN-LAST:event_txtLoginUsuarioActionPerformed
 
     private void txtSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaUsuarioActionPerformed
@@ -181,22 +203,62 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+       
+        //Captura de informações da tela
         int id_usuario = Integer.parseInt(txtIdUsuario.getText());
         String nome_usuario = txtNomeUsuario.getText();
         String login_usuario = txtLoginUsuario.getText();
         String senha_usuario = txtSenhaUsuario.getText();
         
+        //Transferencia para classe DTO
         UsuarioDTO objUsuarioDTO = new UsuarioDTO();
-        
         objUsuarioDTO.setId_usuario(id_usuario);
         objUsuarioDTO.setNomeUsuario(nome_usuario);
         objUsuarioDTO.setLoginUsuario(login_usuario);
-        objUsuarioDTO.setSenhaUsuario(senha_usuario);        
-        UsuarioDAO U1 = new UsuarioDAO();       
-        U1.inserirUsuario(objUsuarioDTO); 
+        objUsuarioDTO.setSenhaUsuario(senha_usuario);
+        
+        //Cria objeto e chama metodo inserir de DAO
+        UsuarioDAO U1 = new UsuarioDAO();
+        U1.inserirUsuario(objUsuarioDTO);
         Limpar();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        //Captura de informações da tela
+        int id_usuario = Integer.parseInt(txtIdUsuario.getText());
+        String nome_usuario = txtNomeUsuario.getText();
+        String login_usuario = txtLoginUsuario.getText();
+        String senha_usuario = txtSenhaUsuario.getText();
+        
+        //Transferencia para classe DTO
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        objUsuarioDTO.setId_usuario(id_usuario);
+        objUsuarioDTO.setNomeUsuario(nome_usuario);
+        objUsuarioDTO.setLoginUsuario(login_usuario);
+        objUsuarioDTO.setSenhaUsuario(senha_usuario);
+        
+        //Cria o objeto e chama o metodo Editar de DAO
+        UsuarioDAO U1 = new UsuarioDAO();
+        U1.EditarUsuario(objUsuarioDTO);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void BntExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BntExcluirActionPerformed
+       
+        //Captura a informação da tela
+        String id_usuario = txtIdUsuario.getText();
+        
+        //Cria o objeto e seta informação de id_usuario em setId_usuario de DTO
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        objUsuarioDTO.setId_usuario(Integer.parseInt(id_usuario));
+        
+        //Cria e chama o metodo apagar de DAO
+        UsuarioDAO objUsuarioDAO = new UsuarioDAO();
+        objUsuarioDAO.DeletarUsuario(objUsuarioDTO);
+        
+    }//GEN-LAST:event_BntExcluirActionPerformed
 
     public static void main(String args[]) {
 
@@ -208,10 +270,10 @@ public class TelaUsuarios extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BntExcluir;
     private javax.swing.JButton bntPesquisar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -220,6 +282,6 @@ public class TelaUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtLoginUsuario;
     private javax.swing.JTextField txtNomeUsuario;
-    private javax.swing.JTextField txtSenhaUsuario;
+    public static javax.swing.JTextField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 }

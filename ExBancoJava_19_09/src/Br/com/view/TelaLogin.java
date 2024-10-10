@@ -1,9 +1,11 @@
 package Br.com.view;
 
+import Br.com.DTO.UsuarioDTO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import Br.com.Dao.ConexaoDao;
+import Br.com.Dao.UsuarioDAO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -13,25 +15,6 @@ public class TelaLogin extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
 
-    public void logar() {     
-        String sql = "select * from tb_usuarios where login = ? and senha = ? ";
-        try {
-            //preparar a consulta no banco, em funcao do que foi inserido
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtUsuario.getText());
-            pst.setString(2, txtSenha.getText());
-            //executar a query
-            rs = pst.executeQuery();            
-            if (rs.next()) {
-                TelaPrincipal principal = new TelaPrincipal();
-                principal.setVisible(true);  
-            }else{
-                JOptionPane.showMessageDialog(null, "Usuario e/ou senha invalidos");
-            }           
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,"Tela de login" + e);
-        }
-    }
     public TelaLogin() {
 
         initComponents();
@@ -56,8 +39,8 @@ public class TelaLogin extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtUsuario = new javax.swing.JTextField();
-        txtSenha = new javax.swing.JTextField();
+        txtLoginUsuario = new javax.swing.JTextField();
+        txtSenhaUsuario = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -75,15 +58,15 @@ public class TelaLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Senha");
 
-        txtUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtLoginUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUsuarioActionPerformed(evt);
+                txtLoginUsuarioActionPerformed(evt);
             }
         });
 
-        txtSenha.addActionListener(new java.awt.event.ActionListener() {
+        txtSenhaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtSenhaActionPerformed(evt);
+                txtSenhaUsuarioActionPerformed(evt);
             }
         });
 
@@ -100,8 +83,8 @@ public class TelaLogin extends javax.swing.JFrame {
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                            .addComponent(txtSenha)))
+                            .addComponent(txtLoginUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                            .addComponent(txtSenhaUsuario)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,11 +100,11 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtLoginUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSenhaUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton1)
                 .addGap(10, 10, 10))
@@ -131,16 +114,29 @@ public class TelaLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
+    private void txtLoginUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginUsuarioActionPerformed
 
-    }//GEN-LAST:event_txtUsuarioActionPerformed
+    }//GEN-LAST:event_txtLoginUsuarioActionPerformed
 
-    private void txtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaActionPerformed
+    private void txtSenhaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSenhaUsuarioActionPerformed
 
-    }//GEN-LAST:event_txtSenhaActionPerformed
+    }//GEN-LAST:event_txtSenhaUsuarioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        logar();
+        
+        //Captura de informações da tela
+        String login_usuario = txtLoginUsuario.getText();
+        String senha_usuario = txtSenhaUsuario.getText();
+        
+        //Transferencia para classe DTO
+        UsuarioDTO objUsuarioDTO = new UsuarioDTO();
+        objUsuarioDTO.setLoginUsuario(login_usuario);
+        objUsuarioDTO.setSenhaUsuario(senha_usuario);
+        
+        //Cria objeto e chama metodo logar em DAO
+        UsuarioDAO U1 = new UsuarioDAO();
+        U1.logar(objUsuarioDTO);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
@@ -157,7 +153,7 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel lblStatus;
-    private javax.swing.JTextField txtSenha;
-    private javax.swing.JTextField txtUsuario;
+    private javax.swing.JTextField txtLoginUsuario;
+    private javax.swing.JTextField txtSenhaUsuario;
     // End of variables declaration//GEN-END:variables
 }

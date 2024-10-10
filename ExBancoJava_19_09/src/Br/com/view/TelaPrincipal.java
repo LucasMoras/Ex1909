@@ -86,15 +86,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SubMenuUsuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubMenuUsuActionPerformed
+       
        //chamar tela usuario
        TelaUsuarios Tusuario = new TelaUsuarios();
        Tusuario.setVisible(true);
+       
     }//GEN-LAST:event_SubMenuUsuActionPerformed
 
     private void SubMenuCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubMenuCliActionPerformed
+       
        TelaCliente Tcliente = new TelaCliente();
        Tcliente.setVisible(true);
        desktop.add(Tcliente);
+       
     }//GEN-LAST:event_SubMenuCliActionPerformed
 
     public static void main(String args[]) {
